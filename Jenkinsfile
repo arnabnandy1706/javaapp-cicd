@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('maven-test) {
+        stage('maven-test') {
             agent {
                 docker {
                     image 'arnabdnandy1706/jdk-mvn-jenkins-agent:0.2'
