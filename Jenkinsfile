@@ -63,8 +63,8 @@ pipeline {
                 echo "Deploying the Application on Kubernetes"
                 sh '''
                     cd application/kube
-                    kubectl apply -f mongo.yaml
-                    kubectl apply -f knote.yaml 
+                    /usr/local/bin/kubectl apply -f mongo.yaml
+                    /usr/local/bin/kubectl apply -f knote.yaml 
                 '''
             }
         }
