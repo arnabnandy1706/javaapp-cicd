@@ -40,7 +40,7 @@ pipeline {
                 echo "Uploading the Artifact to Minio Server"
                 sh '''
                     cd application/target
-                    minio-upload articats knote-java-1.0.0.jar 53.66.26.10:9001
+                    minio-upload articats knote-java-1.0.0.jar 52.66.26.10:9001
                 '''
             }
         }
@@ -50,7 +50,7 @@ pipeline {
                 echo "Downloading the Artifacts and building the Docker image and pushing it to the Container Registry"
                 sh '''
                     cd application
-                    minio-download artifacts knote-java-1.0.0.jar 53.66.26.10:9001
+                    minio-download artifacts knote-java-1.0.0.jar 52.66.26.10:9001
                     docker build -t knote-app:latest .
                     docker tag knote-app:latest arnabdnandy1706/knote-app:latest
                     docker push arnabdnandy1706/knote-app:latest
