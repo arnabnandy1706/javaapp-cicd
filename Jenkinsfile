@@ -45,7 +45,7 @@ pipeline {
             }
         }
         stage('docker-build-push') {
-            agent { label: 'AWS' }
+            agent { label 'AWS' }
             steps {
                 echo "Downloading the Artifacts and building the Docker image and pushing it to the Container Registry"
                 sh '''
@@ -58,7 +58,7 @@ pipeline {
             }
         }
         stage('deploy-kubernetes') {
-            agent { label: 'AWS' }
+            agent { label 'AWS' }
             steps {
                 echo "Deploying the Application on Kubernetes"
                 sh '''
