@@ -12,9 +12,9 @@ pipeline {
         // This can be http or https
         NEXUS_PROTOCOL = "http"
         // Where your Nexus is running
-        NEXUS_URL = "http://ec2-15-206-189-141.ap-south-1.compute.amazonaws.com:8081"
+        NEXUS_URL = "http://nexus.upi.example.com:8081"
         // Repository where we will upload the artifact
-        NEXUS_REPOSITORY = "maven-repo-01"
+        NEXUS_REPOSITORY = "note-app"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-repo"
     }
