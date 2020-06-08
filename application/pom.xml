@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.learnk8s</groupId>
 	<artifactId>knote-java</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>knote</name>
 	<description>Knote</description>
 
