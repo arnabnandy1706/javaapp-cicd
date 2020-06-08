@@ -16,7 +16,7 @@ pipeline {
         // NEXUS_URL = "ec2-15-206-189-141.ap-south-1.compute.amazonaws.com:8081"
 	NEXUS_URL = "nexus.upi.example.com:8081"
         // Repository where we will upload the artifact
-        NEXUS_REPOSITORY = "knote-app"
+        NEXUS_REPOSITORY = "knote-app-snapshot"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-repo"
     }
