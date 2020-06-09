@@ -1,4 +1,4 @@
-library identifier: "ikep@$env.BRANCH_NAME", retriever: legacySCM(scm)
+// library identifier: "ikep@$env.BRANCH_NAME", retriever: legacySCM(scm)
 
 /* Dynamic variable assignment */
 properties([
