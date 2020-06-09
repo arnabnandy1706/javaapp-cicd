@@ -14,7 +14,7 @@
     <mirror>
       <id>nexus-premise</id>
       <name>Nexus On-Premise</name>
-      <url>https://${env.NEXUS_FQDN}:${env.NEXUS_PORT}/repository/maven-public/</url>
+      <url>http://${env.NEXUS_FQDN}:${env.NEXUS_PORT}/repository/maven-public/</url>
       <mirrorOf>*</mirrorOf>
     </mirror>
   </mirrors>
