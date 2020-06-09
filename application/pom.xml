@@ -51,6 +51,12 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<repositories>
+      <repository>
+         <id>nexus-premise</id>
+         <url>http://ec2-15-206-189-141.ap-south-1.compute.amazonaws.com/maven-public</url>
+      </repository>
+   </repositories>
 
 	<build>
 		<plugins>
