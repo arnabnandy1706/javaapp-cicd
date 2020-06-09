@@ -18,7 +18,7 @@ if (params.ARTIFACT_VERSION == '') error ("Please specify an ARTIFACT_VERSION")
 pipeline {
   agent { label "mavenBuilds"}
   options { 
-    ansiColor('xterm') 
+    // ansiColor('xterm') 
     disableConcurrentBuilds()
   }
 
