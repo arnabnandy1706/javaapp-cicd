@@ -58,13 +58,11 @@
       </repository>
    </repositories> -->
    <distributionManagement>
-       <repository>
-         <repository>
+      <repository>
          <id>nexus-premise</id>
 		 <name>Nexus Repo</name>
          <url>http://ec2-15-206-189-141.ap-south-1.compute.amazonaws.com/maven-public</url>
       </repository>
-       </repository>
    </distributionManagement>
 
 	<build>
