@@ -1,0 +1,21 @@
+<settings>
+  <localRepository>.m2</localRepository>
+  <servers>
+    <server>
+      <id>nexus-premise</id>
+      <!-- <username>${env.NEXUS_CREDS_USR}</username>
+      <password>${env.NEXUS_CREDS_PSW}</password> -->
+      <username>${server.username}</username>
+      <password>${server.password}</password>
+    </server>
+  </servers>
+
+  <mirrors>
+    <mirror>
+      <id>nexus-premise</id>
+      <name>Nexus On-Premise</name>
+      <url>https://${env.NEXUS_FQDN}:${env.NEXUS_PORT}/repository/maven-public/</url>
+      <mirrorOf>*</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>

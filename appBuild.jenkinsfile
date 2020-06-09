@@ -1,0 +1,115 @@
+library identifier: "ikep@$env.BRANCH_NAME", retriever: legacySCM(scm)
+
+/* Dynamic variable assignment */
+properties([
+    parameters([]
+    + string( name: 'ARTIFACT_VERSION',
+              defaultValue: '',
+              description: 'type the ARTIFACT_VERSION'
+            )
+    )
+])
+
+jobParameters.checkParameters()
+if (params.ARTIFACT_VERSION == '') error ("Please specify an ARTIFACT_VERSION")
+
+/* Pipeline */
+
+pipeline {
+  agent { label "mavenBuilds"}
+  options { 
+    ansiColor('xterm') 
+    disableConcurrentBuilds()
+  }
+
+  tools {
+    jdk 'java-8'
+    maven 'maven-3'
+    }
+
+  environment {
+    NEXUS_FQDN     = 'ec2-15-206-189-141.ap-south-1.compute.amazonaws.com'
+    NEXUS_PORT     = '8081'
+    //ARTIFACT_VERSION = ''
+    JAVA_HOME      = "/usr/java/jdk1.8.0_191-amd64"
+    MAVEN_HOME     = "/opt/maven"
+    NEXUS_CREDS = credentials('nexus-repo')
+  }
+
+  stages {
+    stage('clean & verify') {
+      steps {
+        script {
+          // sh '''
+          //   echo "Service user is $NEXUS_CREDS_USR"
+          //   echo "Service password is $NEXUS_CREDS_PSW"
+          //   cd ikep-access-layer
+          //   ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml clean
+          // '''
+          withCredentials([usernamePassword(credentialsId: 'nexus-repo', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+          withMaven(globalMavenSettingsFilePath: 'application/settings.xml', jdk: "java-8", maven: "maven-3") {
+          dir("application") {
+            sh "mvn -Drevision=${ARTIFACT_VERSION} -Dserver.username=${USERNAME} -Dserver.password=${PASSWORD} clean verify"
+            }
+          }
+        }
+      }
+    }
+  }
+
+  stage('deploy') {
+      steps {
+        script {
+          // sh '''
+          //   echo "Service user is $NEXUS_CREDS_USR"
+          //   echo "Service password is $NEXUS_CREDS_PSW"
+          //   cd ikep-access-layer
+          //   ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml clean
+          // '''
+          withCredentials([usernamePassword(credentialsId: 'nexus-repo', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+          withMaven(globalMavenSettingsFilePath: 'application/settings.xml', jdk: "java-8", maven: "maven-3") {
+          dir("application") {
+            sh "mvn -Drevision=${ARTIFACT_VERSION} -Dserver.username=${USERNAME} -Dserver.password=${PASSWORD} deploy"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+}
+
+//   stages {
+//     stage('clean') {
+//       steps {
+//         script {
+//           sh '''
+//             cd ikep-access-layer
+//             ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml clean
+//           '''
+//         }
+//       }
+//     }
+//     stage('verify') {
+//       steps {
+//         script{
+//           sh '''
+//             cd ikep-access-layer
+//             ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml verify
+//           '''
+//         }
+//       }
+//     }
+//     stage('deploy') {
+//       steps {
+//         script{
+//           sh '''
+//             cd ikep-access-layer
+//             ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml deploy
+//           '''
+//         }
+//       }
+//     }
+//   }
+//}
