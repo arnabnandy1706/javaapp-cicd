@@ -80,11 +80,20 @@
         </snapshotRepository>
    </distributionManagement>
 
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+				<localCheckout>true</localCheckout>
+				<pushChanges>false</pushChanges>
+				<preparationGoals>validate</preparationGoals>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
