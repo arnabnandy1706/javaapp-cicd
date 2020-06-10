@@ -79,7 +79,7 @@
       <repository>
          <id>nexus-premise</id>
 		 <name>Nexus Repo</name>
-         <url>http://ec2-15-206-189-141.ap-south-1.compute.amazonaws.com:8081/repository/knote-app-SNAPSHOT</url>
+         <url>http://ec2-15-206-189-141.ap-south-1.compute.amazonaws.com:8081/repository/knote-app-RELEASE</url>
       </repository>
 	  <snapshotRepository>
             <id>nexus-premise</id>
