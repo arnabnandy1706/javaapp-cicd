@@ -15,11 +15,11 @@
 	<description>Knote</description>
 
 	<scm>
-    <connection>scm:git:https://github.com/arnabnandy1706/javaapp-cicd.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/arnabnandy1706/javaapp-cicd.git</developerConnection>
-    <url>https://github.com/arnabnandy1706/javaapp-cicd</url>
-    <tag>HEAD</tag>
-  </scm>
+		<connection>scm:git:https://github.com/arnabnandy1706/javaapp-cicd.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/arnabnandy1706/javaapp-cicd.git</developerConnection>
+		<url>https://github.com/arnabnandy1706/javaapp-cicd</url>
+		<tag>HEAD</tag>
+  	</scm>
 
 	<properties>
 		<java.version>8</java.version>
@@ -78,7 +78,7 @@
    <distributionManagement>
       <repository>
          <id>nexus-premise</id>
-		 <name>Nexus Repo</name>
+		 <!-- <name>Nexus Repo</name> -->
          <url>http://ec2-15-206-189-141.ap-south-1.compute.amazonaws.com:8081/repository/knote-app-RELEASE</url>
       </repository>
 	  <snapshotRepository>
