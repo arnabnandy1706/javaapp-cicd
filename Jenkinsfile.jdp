@@ -16,11 +16,11 @@
 /* Pipeline */
 
 pipeline {
-  agent { label "master"}
+  agent { label "master" }
 
   parameters {
       choice (
-          name: 'buildType',
+          name: 'BuildType',
           choices:"SNAPSHOT\nRELEASE",
           description: "Choose the Build type"
       )
@@ -50,17 +50,9 @@ pipeline {
     stage('clean & verify') {
       steps {
         script {
-          // sh '''
-          //   echo "Service user is $NEXUS_CREDS_USR"
-          //   echo "Service password is $NEXUS_CREDS_PSW"
-          //   cd ikep-access-layer
-          //   ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml clean
-          // '''
           withCredentials([usernamePassword(credentialsId: 'nexus-repo', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
-          withMaven(globalMavenSettingsFilePath: 'application/settings.xml', jdk: "java-8", maven: "maven-3") {
-          dir("application") {
-            sh "echo ${params.buildType} && mvn -Drevision=${ARTIFACT_VERSION} -Dserver.username=${USERNAME} -Dserver.password=${PASSWORD} clean verify"
-            }
+          withMaven(globalMavenSettingsFilePath: 'settings.xml', jdk: "java-8", maven: "maven-3") {
+            sh "mvn -Drevision=${ARTIFACT_VERSION} -Dserver.username=${USERNAME} -Dserver.password=${PASSWORD} clean verify"
           }
         }
       }
@@ -68,19 +60,14 @@ pipeline {
   }
 
   stage('deploy') {
+      when {
+          expression { params.BuildType == 'SNAPSHOT' }
+      }
       steps {
         script {
-          // sh '''
-          //   echo "Service user is $NEXUS_CREDS_USR"
-          //   echo "Service password is $NEXUS_CREDS_PSW"
-          //   cd ikep-access-layer
-          //   ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml clean
-          // '''
           withCredentials([usernamePassword(credentialsId: 'nexus-repo', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
-          withMaven(globalMavenSettingsFilePath: 'application/settings.xml', jdk: "java-8", maven: "maven-3") {
-          dir("application") {
+          withMaven(globalMavenSettingsFilePath: 'settings.xml', jdk: "java-8", maven: "maven-3") {
             sh "mvn -Drevision=${ARTIFACT_VERSION} -Dserver.username=${USERNAME} -Dserver.password=${PASSWORD} deploy"
-            }
           }
         }
       }
@@ -88,58 +75,18 @@ pipeline {
   }
 
   stage('release') {
+      when {
+          expression { params.BuildType == 'RELEASE' }
+      }
       steps {
         script {
-          // sh '''
-          //   echo "Service user is $NEXUS_CREDS_USR"
-          //   echo "Service password is $NEXUS_CREDS_PSW"
-          //   cd ikep-access-layer
-          //   ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml clean
-          // '''
           withCredentials([usernamePassword(credentialsId: 'nexus-repo', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
-          withMaven(globalMavenSettingsFilePath: 'application/settings.xml', jdk: "java-8", maven: "maven-3") {
-          dir("application") {
+          withMaven(globalMavenSettingsFilePath: 'settings.xml', jdk: "java-8", maven: "maven-3") {
             sh "mvn -Drevision=${ARTIFACT_VERSION} -Dserver.username=${USERNAME} -Dserver.password=${PASSWORD} release:clean release:prepare release:perform"
-            }
           }
         }
       }
     }
   }
 }
-
 }
-
-//   stages {
-//     stage('clean') {
-//       steps {
-//         script {
-//           sh '''
-//             cd ikep-access-layer
-//             ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml clean
-//           '''
-//         }
-//       }
-//     }
-//     stage('verify') {
-//       steps {
-//         script{
-//           sh '''
-//             cd ikep-access-layer
-//             ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml verify
-//           '''
-//         }
-//       }
-//     }
-//     stage('deploy') {
-//       steps {
-//         script{
-//           sh '''
-//             cd ikep-access-layer
-//             ${MAVEN_HOME}/mvn -Drevision=${ARTIFACT_VERSION} -s settings.xml deploy
-//           '''
-//         }
-//       }
-//     }
-//   }
-//}
