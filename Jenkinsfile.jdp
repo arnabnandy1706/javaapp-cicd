@@ -1,22 +1,9 @@
-// library identifier: "ikep@$env.BRANCH_NAME", retriever: legacySCM(scm)
-
-/* Dynamic variable assignment */
-// properties([
-//     parameters([]
-//     + string( name: 'ARTIFACT_VERSION',
-//               defaultValue: '',
-//               description: 'type the ARTIFACT_VERSION'
-//             )
-//     )
-// ])
-
-// jobParameters.checkParameters()
-// if (params.ARTIFACT_VERSION == '') error ("Please specify an ARTIFACT_VERSION")
-
 /* Pipeline */
 
 pipeline {
   agent { label "master" }
+
+/* Dynamic variable assignment */
 
   parameters {
       choice (
